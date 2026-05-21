@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>好单线报 - 每日精选优惠</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <meta name="description" content="好单线报 - 每日精选淘宝京东拼多多优惠商品">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <span class="logo-icon">🔥</span>
+                <span class="logo-text">好单线报</span>
+            </a>
+            <form class="search-bar" id="search-form">
+                <input type="text" id="search-input" placeholder="搜索优惠商品..." class="search-input">
+                <button type="submit" class="search-btn">搜索</button>
+            </form>
+        </div>
+    </header>
+
+    <!-- 分类筛选 -->
+    <nav class="filter-bar">
+        <div class="container">
+            <div class="filter-group" id="filter-group">
+                <span class="filter-label">平台：</span>
+                <!-- JS 动态生成 -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="container main-content">
+        <div class="results-info" id="results-info"></div>
+        <div class="item-grid" id="item-grid"></div>
+        <div class="pagination" id="pagination"></div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>好单线报 - 每日精选优惠</p>
+            <p class="footer-note">本站所有商品信息均来自互联网，价格以实际购买页为准</p>
+        </div>
+    </footer>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
