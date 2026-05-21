@@ -135,7 +135,7 @@ function renderList(page) {
         const platformClass = (item.platform || '其他').replace('/', '');
         const imgHtml = item.image
             ? `<img src="${item.image}" alt="${escHtml(item.title)}" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('no-img')">`
-            : `<div class="item-placeholder"><span>${(item.platform || '优')[:1]}</span></div>`;
+            : `<div class="item-placeholder"><span>${(item.platform || '优')[0]}</span></div>`;
 
         const priceHtml = item.price ? `<span class="item-price"><em>¥</em>${item.price}</span>` : '';
         const discountHtml = item.discount_info ? `<span class="item-discount">${escHtml(item.discount_info)}</span>` : '';
