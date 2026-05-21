@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正在跳转... - 好单线报</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .go-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .go-icon { font-size: 48px; margin-bottom: 16px; }
+        .go-title { font-size: 18px; color: #2c2c2a; margin-bottom: 8px; }
+        .go-hint { font-size: 14px; color: #888; margin-bottom: 24px; }
+        .go-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #ff4142, #ff6b3a);
+            color: #fff;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .go-btn:hover { opacity: 0.9; }
+        .go-taopassword {
+            margin-top: 20px;
+            padding: 16px;
+            background: #fff8f5;
+            border: 1px dashed #ff6600;
+            border-radius: 8px;
+            max-width: 500px;
+        }
+        .go-taopassword .label { font-size: 13px; color: #666; margin-bottom: 8px; }
+        .go-taopassword .tpwd {
+            font-size: 14px; color: #ff4400; word-break: break-all;
+            padding: 8px; background: #fff; border-radius: 4px;
+            user-select: all;
+        }
+        .copy-btn {
+            margin-top: 8px;
+            padding: 6px 16px;
+            background: #ff4400;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .copy-btn:hover { background: #e63c00; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <span class="logo-icon">🔥</span>
+                <span class="logo-text">好单线报</span>
+            </a>
+            <a href="/" class="back-link">← 返回列表</a>
+        </div>
+    </header>
+
+    <main class="container go-page" id="go-page">
+        <div class="go-icon">🚀</div>
+        <div class="go-title" id="go-title">正在跳转到购买页面...</div>
+        <div class="go-hint" id="go-hint">如果没有自动跳转，请点击下方按钮</div>
+        <a href="#" class="go-btn" id="go-btn" target="_blank" rel="noopener noreferrer">前往购买</a>
+        <div class="go-taopassword" id="tpwd-section" style="display:none;">
+            <div class="label">📋 淘口令（复制后打开淘宝APP）</div>
+            <div class="tpwd" id="tpwd-text"></div>
+            <button class="copy-btn" onclick="copyTpwd()">复制口令</button>
+        </div>
+    </main>
+
+    <script>
+        async function init() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (!id) {
+                document.getElementById('go-title').textContent = '商品不存在';
+                return;
+            }
+
+            try {
+                const resp = await fetch('/data/haodan.json');
+                const items = await resp.json();
+                const item = items.find(i => i.id === id);
+
+                if (!item) {
+                    document.getElementById('go-title').textContent = '商品不存在';
+                    return;
+                }
+
+                const buyUrl = item.buy_link || item.original_buy_link || '';
+                const platform = item.platform || '商品';
+
+                document.getElementById('go-title').textContent = `正在跳转到${platform}购买...`;
+                document.getElementById('go-btn').href = buyUrl;
+                document.getElementById('go-btn').textContent = `前往${platform}购买`;
+
+                // 淘口令
+                if (item.taopassword) {
+                    document.getElementById('tpwd-section').style.display = 'block';
+                    document.getElementById('tpwd-text').textContent = item.taopassword;
+                }
+
+                // 自动跳转（1.5秒后）
+                if (buyUrl) {
+                    setTimeout(() => {
+                        window.location.href = buyUrl;
+                    }, 1500);
+                }
+            } catch(e) {
+                document.getElementById('go-title').textContent = '加载失败，请重试';
+                console.error(e);
+            }
+        }
+
+        function copyTpwd() {
+            const text = document.getElementById('tpwd-text').textContent;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => alert('已复制，打开淘宝APP即可'));
+            } else {
+                const el = document.getElementById('tpwd-text');
+                const range = document.createRange();
+                range.selectNodeContents(el);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+                alert('已复制，打开淘宝APP即可');
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
