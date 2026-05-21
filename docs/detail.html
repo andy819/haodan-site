@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品详情 - 好单线报</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <span class="logo-icon">🔥</span>
+                <span class="logo-text">好单线报</span>
+            </a>
+            <a href="/" class="back-link">← 返回列表</a>
+        </div>
+    </header>
+
+    <!-- 商品详情 -->
+    <main class="container detail-page" id="detail-page">
+        <div class="detail-card">
+            <div class="detail-layout">
+                <div class="detail-img-wrap" id="detail-img"></div>
+                <div class="detail-info" id="detail-info">
+                    <div style="text-align:center;padding:40px;color:#888;">加载中...</div>
+                </div>
+            </div>
+            <div class="detail-desc" id="detail-desc" style="display:none;">
+                <h2 class="desc-title">商品详情</h2>
+                <div class="desc-content" id="desc-content"></div>
+            </div>
+        </div>
+
+        <!-- 相关推荐 -->
+        <div class="related-section" id="related-section" style="display:none;">
+            <h2 class="section-title">相关推荐</h2>
+            <div class="related-grid" id="related-grid"></div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>好单线报 - 每日精选优惠</p>
+        </div>
+    </footer>
+
+    <script src="/js/detail.js"></script>
+</body>
+</html>
