@@ -1,7 +1,7 @@
 name: 自动采集好单线报
 on:
   schedule:
-    - cron: '* * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 permissions:
