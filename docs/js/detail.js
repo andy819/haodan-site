@@ -47,7 +47,7 @@ function renderDetail(item) {
     if (item.image) {
         imgWrap.innerHTML = `<img src="${item.image}" alt="${escHtml(item.title)}" onerror="this.style.display='none';imgWrap.classList.add('no-img')">`;
     } else {
-        imgWrap.innerHTML = `<div class="detail-placeholder"><span>${(item.platform || '优')[:1]}</span></div>`;
+        imgWrap.innerHTML = `<div class="detail-placeholder"><span>${(item.platform || '优')[0]}</span></div>`;
     }
 
     // 信息
@@ -132,7 +132,7 @@ function renderRelated(item) {
         const platformClass = (r.platform || '其他').replace('/', '');
         const imgHtml = r.image
             ? `<img src="${r.image}" alt="${escHtml(r.title)}" loading="lazy" onerror="this.style.display='none'">`
-            : `<div class="item-placeholder small"><span>${(r.platform || '优')[:1]}</span></div>`;
+            : `<div class="item-placeholder small"><span>${(r.platform || '优')[0]}</span></div>`;
         const priceHtml = r.price ? `<span class="related-price"><em>¥</em>${r.price}</span>` : '';
 
         return `<a href="/detail.html?id=${r.id}" class="related-card">
