@@ -1,0 +1,17 @@
+[build]
+  publish = "docs"
+
+[[redirects]]
+  from = "/detail/:id"
+  to = "/detail.html?id=:id"
+  status = 200
+
+[[redirects]]
+  from = "/go/:id"
+  to = "/go.html?id=:id"
+  status = 200
+
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300"
