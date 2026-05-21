@@ -1,0 +1,42 @@
+name: 自动采集好单线报
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安装依赖
+        run: pip install requests beautifulsoup4
+
+      - name: 运行采集
+        env:
+          TB_APP_KEY: ${{ secrets.TB_APP_KEY }}
+          TB_APP_SECRET: ${{ secrets.TB_APP_SECRET }}
+          TB_PID: ${{ secrets.TB_PID }}
+          TB_ADZONE_ID: ${{ secrets.TB_ADZONE_ID }}
+          TB_SITE_ID: ${{ secrets.TB_SITE_ID }}
+          JD_UNION_ID: ${{ secrets.JD_UNION_ID }}
+          PDD_PID: ${{ secrets.PDD_PID }}
+        run: python scrape_cloud.py
+
+      - name: 提交并推送
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/data/haodan.json data/haodan.json
+          git diff --staged --quiet || git commit -m "自动更新数据 $(date '+%Y-%m-%d %H:%M')"
+          git push
